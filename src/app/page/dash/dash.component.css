@@ -1,0 +1,4 @@
+:host ::ng-deep .p-datatable-wrapper{
+    display: flex;
+    justify-content: center;
+}

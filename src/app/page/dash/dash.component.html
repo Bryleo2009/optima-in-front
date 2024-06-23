@@ -1,0 +1,91 @@
+<section class="flex justify-content-center">
+    <div class="flex justify-content-center flex-column align-items-center gap-3" style="width: 80%;">
+        <div class="flex justify-content-between w-full align-items-center">
+            <div class="flex flex-column gap-2">
+                <span class="p-input-icon-left">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" pInputText placeholder="Buscar Proyecto, Cliente, Nun. Doc" style="width: 500px;" [(ngModel)]="search" (input)="searchInput($event)"/>
+                </span>
+            </div>            
+            <div class="flex gap-2">
+                <div class="flex flex-column gap-2">
+                    <label>Fecha Inicio</label>
+                    <p-calendar [showIcon]="true" [showButtonBar]="true" [minDate]="minDate" [(ngModel)]="fechIni" [maxDate]="maxDate" placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" (input)="restoreBusqueda()"></p-calendar>
+                </div>
+                <div class="flex flex-column gap-2">
+                    <label>Fecha Fin</label>
+                    <p-calendar [showIcon]="true" [showButtonBar]="true" [minDate]="minDate" [(ngModel)]="fechFin" [maxDate]="maxDate" placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy"></p-calendar>
+                </div>
+            </div>   
+            <div>
+                <p-button label="Buscar" (onClick)="searchGeneral()"></p-button>            
+            </div>         
+        </div>
+        <div class="card w-full">
+            <p-table [value]="creditos" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 10%;">NUM DOC</th>
+                        <th style="width: 30%;">CLIENTE</th>
+                        <th>PROYECTO</th>
+                        <th>FECHA INI</th>
+                        <th>PLAZO</th>
+                        <th>MONTO TOTAL</th>
+                        <th>MONTO PARCIAL</th>
+                        <th style="width: 5rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-credito let-expanded="expanded">
+                        <tr>                    
+                            <td>{{ credito.cliente.numDoc }}</td>
+                            <td>{{ credito.cliente.nombresCli + ' ' + credito.cliente.apellidosCli }}</td>
+                            <td>{{ credito.proyecto.nombreProyecto }}</td>
+                            <td>{{ credito.fechaInicio | date : "dd/MM/yyyy" }}</td>
+                            <td>{{ credito.plazo }}</td>
+                            <td>{{ credito.monto | currency: 'S/. ' }}</td>
+                            <td>{{ credito.montoCuota | currency: 'S/. ' }}</td>
+                            <td>
+                                <button type="button" pButton pRipple [pRowToggler]="credito" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'fa-solid fa-sort-up' : 'fa-solid fa-caret-down'"></button>
+                            </td>
+                        </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-credito>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-3">
+                                <p-table [value]="credito.listCuotas" dataKey="id" [scrollable]="true" scrollHeight="400px" [tableStyle]="{ 'width':'80%'}">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th style="width: 15%;" pSortableColumn="id">Fecha de pago <p-sortIcon field="price"></p-sortIcon></th>
+                                            <th style="width: 12%;">N° Cuota</th>
+                                            <th style="width: 4%;">Estado</th>
+                                            <th style="width: 20%;"></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-cuota>
+                                        <tr>
+                                            <td>{{ cuota.fechaPago }}</td>
+                                            <td>{{ cuota.id + '/' +  credito.plazo }}</td>
+                                            <td>
+                                                <span class="p-tag p-tag-success" *ngIf="cuota.estado == 0">Cancelado</span>
+                                                <span class="p-tag p-tag-warning" *ngIf="cuota.estado == 1">PENDIENTE</span>
+                                            </td>
+                                            <td class="flex justify-content-center">
+                                                <p-fileUpload mode="basic" chooseLabel="Subir Archivo" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [style]="{ 'max-width': '200px', 'padding-rigth': '5px'}"></p-fileUpload>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="6">No existen registros</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</section>
