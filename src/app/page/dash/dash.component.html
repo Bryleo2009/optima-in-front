@@ -1,28 +1,46 @@
 <section class="flex justify-content-center">
-    <div class="flex justify-content-center flex-column align-items-center gap-3" style="width: 80%;">
-        <div class="flex justify-content-between w-full align-items-center">
-            <div class="flex flex-column gap-2">
+    <p-toast></p-toast>
+    <div
+        class="flex justify-content-center flex-column align-items-center gap-3"
+        style="width: 100%; padding: 25px;">
+        <h1 class="w-full titulo text-4xl">Reporte</h1>
+        <div class="flex justify-content-between w-full align-items-center flex-wrap">
+            <div class="flex flex-column gap-2 mt-2 w-5">
                 <span class="p-input-icon-left">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" pInputText placeholder="Buscar Proyecto, Cliente, Nun. Doc" style="width: 500px;" [(ngModel)]="search" (input)="searchInput($event)"/>
+                    <input type="text" pInputText
+                        placeholder="Buscar Proyecto, Cliente, Nun. Doc"
+                        style="width: 100%;" [(ngModel)]="search"
+                        (input)="searchInput($event)" />
                 </span>
-            </div>            
-            <div class="flex gap-2">
-                <div class="flex flex-column gap-2">
-                    <label>Fecha Inicio</label>
-                    <p-calendar [showIcon]="true" [showButtonBar]="true" [minDate]="minDate" [(ngModel)]="fechIni" [maxDate]="maxDate" placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" (input)="restoreBusqueda()"></p-calendar>
+            </div>
+            <div class="flex gap-2 mt-2">
+                <div class="flex flex-column container-fecha">
+                    <label class="mt-2 pl-2 font-bold">Fecha Inicio</label>
+                    <p-calendar [showIcon]="true" [showButtonBar]="true" class="custom-button"
+                        [minDate]="minDate" [(ngModel)]="fechIni"
+                        [maxDate]="maxDate" placeholder="dd/mm/yyyy"
+                        dateFormat="dd/mm/yy"
+                        (input)="restoreBusqueda()"></p-calendar>
                 </div>
-                <div class="flex flex-column gap-2">
-                    <label>Fecha Fin</label>
-                    <p-calendar [showIcon]="true" [showButtonBar]="true" [minDate]="minDate" [(ngModel)]="fechFin" [maxDate]="maxDate" placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy"></p-calendar>
+                <div class="flex flex-column  container-fecha">
+                    <label class="mt-2 pl-2 font-bold">Fecha Fin</label>
+                    <p-calendar [showIcon]="true" [showButtonBar]="true" class="custom-button"
+                        [minDate]="minDate" [(ngModel)]="fechFin"
+                        [maxDate]="maxDate" placeholder="dd/mm/yyyy"
+                        dateFormat="dd/mm/yy"></p-calendar>
                 </div>
-            </div>   
-            <div>
-                <p-button label="Buscar" (onClick)="searchGeneral()"></p-button>            
-            </div>         
+            </div>
+            <div class="mt-2">
+                <p-button label="Buscar" (onClick)="searchGeneral()" [style]="{'border-radius':'25px'}"></p-button>
+            </div>
         </div>
         <div class="card w-full">
-            <p-table [value]="creditos" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }">
+            <p-table [value]="creditos" dataKey="id" [paginator]="true"
+                [tableStyle]="{ 'padding': '0px 0 0 25px','min-width': '50rem' }"
+                [rows]="5" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Registro {first} al {last} de {totalRecords} páginas"
+                [rowsPerPageOptions]="[5,10, 25, 50]">
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 10%;">NUM DOC</th>
@@ -35,29 +53,45 @@
                         <th style="width: 5rem"></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-credito let-expanded="expanded">
-                        <tr>                    
-                            <td>{{ credito.cliente.numDoc }}</td>
-                            <td>{{ credito.cliente.nombresCli + ' ' + credito.cliente.apellidosCli }}</td>
-                            <td>{{ credito.proyecto.nombreProyecto }}</td>
-                            <td>{{ credito.fechaInicio | date : "dd/MM/yyyy" }}</td>
-                            <td>{{ credito.plazo }}</td>
-                            <td>{{ credito.monto | currency: 'S/. ' }}</td>
-                            <td>{{ credito.montoCuota | currency: 'S/. ' }}</td>
-                            <td>
-                                <button type="button" pButton pRipple [pRowToggler]="credito" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'fa-solid fa-sort-up' : 'fa-solid fa-caret-down'"></button>
-                            </td>
-                        </tr>
+                <ng-template pTemplate="body" let-credito
+                    let-expanded="expanded">
+                    <tr>
+                        <td>{{ credito.cliente.numDoc }}</td>
+                        <td>{{ credito.cliente.nombresCli + ' ' +
+                            credito.cliente.apellidosCli }}</td>
+                        <td>{{ credito.proyecto.nombreProyecto }}</td>
+                        <td>{{ credito.fechaInicio | date : "dd/MM/yyyy" }}</td>
+                        <td>{{ credito.plazo }}</td>
+                        <td>{{ credito.monto | currency: 'S/. ' }}</td>
+                        <td>{{ credito.montoCuota | currency: 'S/. ' }}</td>
+                        <td>
+                            <button type="button" pButton pRipple
+                                [pRowToggler]="credito"
+                                class="p-button-text p-button-rounded p-button-plain"
+                                [icon]="expanded ? 'fa-solid fa-sort-up' : 'fa-solid fa-caret-down'"></button>
+                        </td>
+                    </tr>
                 </ng-template>
                 <ng-template pTemplate="rowexpansion" let-credito>
                     <tr>
                         <td colspan="7">
                             <div class="p-3">
-                                <p-table [value]="credito.listCuotas" dataKey="id" [scrollable]="true" scrollHeight="400px" [tableStyle]="{ 'width':'80%'}">
+                                <p-table [value]="credito.listCuotas"
+                                    dataKey="id" [scrollable]="true"
+                                    scrollHeight="400px"
+                                    [tableStyle]="{ 'width':'80%'}"
+                                    [paginator]="true"
+                                    [rows]="6" [showCurrentPageReport]="true"
+                                    currentPageReportTemplate="{first} - {last} de {totalRecords}"
+                                    [rowsPerPageOptions]="[6,12,18,24]">
                                     <ng-template pTemplate="header">
                                         <tr>
-                                            <th style="width: 15%;" pSortableColumn="id">Fecha de pago <p-sortIcon field="price"></p-sortIcon></th>
-                                            <th style="width: 12%;">N° Cuota</th>
+                                            <th style="width: 15%;"
+                                                pSortableColumn="id">Fecha de
+                                                pago <p-sorticon
+                                                    field="price"></p-sorticon></th>
+                                            <th style="width: 12%;">N°
+                                                Cuota</th>
                                             <th style="width: 4%;">Estado</th>
                                             <th style="width: 20%;"></th>
                                         </tr>
@@ -65,19 +99,45 @@
                                     <ng-template pTemplate="body" let-cuota>
                                         <tr>
                                             <td>{{ cuota.fechaPago }}</td>
-                                            <td>{{ cuota.id + '/' +  credito.plazo }}</td>
+                                            <td>{{ cuota.id + '/' +
+                                                credito.plazo }}</td>
                                             <td>
-                                                <span class="p-tag p-tag-success" *ngIf="cuota.estado == 0">Cancelado</span>
-                                                <span class="p-tag p-tag-warning" *ngIf="cuota.estado == 1">PENDIENTE</span>
+                                                <span
+                                                    class="p-tag p-tag-success"
+                                                    *ngIf="cuota.estado == 0">CANCELADO</span>
+                                                <span
+                                                    class="p-tag p-tag-warning"
+                                                    *ngIf="cuota.estado == 1">PENDIENTE</span>
                                             </td>
-                                            <td class="flex justify-content-center">
-                                                <p-fileUpload mode="basic" chooseLabel="Subir Archivo" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" [style]="{ 'max-width': '200px', 'padding-rigth': '5px'}"></p-fileUpload>
+                                            <td
+                                                class="flex justify-content-center">
+                                                <form
+                                                    enctype="multipart/form-data">
+                                                    <label
+                                                        for="file-upload-{{cuota.id+'$'+credito.id}}"
+                                                        *ngIf="!imgUrls[cuota.id+'$'+credito.id]"
+                                                        class="custom-file-input"><i
+                                                            class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;&nbsp;Seleccionar
+                                                        Archivo</label>
+                                                    <input
+                                                        id="file-upload-{{cuota.id+'$'+credito.id}}"
+                                                        *ngIf="!imgUrls[cuota.id+'$'+credito.id]"
+                                                        type="file"
+                                                        (change)="onFileChange($event, cuota.id+'$'+credito.id)"
+                                                        style="display: none">
+                                                    <p-button
+                                                        label="Visualizar Voucher"
+                                                        icon="fa-regular fa-eye"
+                                                        *ngIf="imgUrls[cuota.id+'$'+credito.id]"
+                                                        (click)="showImage(imgUrls[cuota.id+'$'+credito.id])"></p-button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="emptymessage">
                                         <tr>
-                                            <td colspan="6">No existen registros</td>
+                                            <td colspan="6">No existen
+                                                registros</td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
@@ -89,3 +149,16 @@
         </div>
     </div>
 </section>
+<p-dialog header="Voucher" [(visible)]="visible" [modal]="true"
+    [style]="{ width: '50%' }" [draggable]="false" [resizable]="false">
+    <div class="w-full flex justify-content-center">
+        <a #downloadLink data-fancybox data-caption="voucher"
+            (click)="cerrarModal()" id="visor-voucher"
+            class="w-full flex justify-content-center">
+            <img [src]="rutaVoucher" style="width: 50%;" id="img-voucher" />
+        </a>
+    </div>
+</p-dialog>
+<script>
+
+</script>

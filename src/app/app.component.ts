@@ -1,7 +1,18 @@
 import { Component } from '@angular/core';
 import { GeneralService } from './_service/modelos/general.service';
 import { PrimeNGConfig, Translation } from 'primeng/api';
+// Import the CloudinaryModule.
+import {CloudinaryModule} from '@cloudinary/ng';
 
+// Import the Cloudinary classes.
+import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
+import { environment } from 'src/assets/environments/environment.development';
+import {
+  accessibility,
+  responsive,
+  lazyload,
+  placeholder
+} from '@cloudinary/ng';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,6 +21,7 @@ import { PrimeNGConfig, Translation } from 'primeng/api';
 export class AppComponent {
   constructor(private config: PrimeNGConfig) {}
 
+  img!: CloudinaryImage;
     ngOnInit() {
       const translations: Translation = {
         firstDayOfWeek: 1,
@@ -61,5 +73,14 @@ export class AppComponent {
       };
   
       this.config.setTranslation(translations);
+
+      const cld = new Cloudinary({
+        cloud: {
+          cloudName: environment.cloudinary.cloudName
+        },
+        
+      });
+
+      this.img = cld.image('doctor/iodxn9nhsqupzuq8wl9v');
     }
 }

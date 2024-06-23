@@ -2,6 +2,7 @@ import { TipoEstadoCredito } from './TipoEstadoCredito';
 import { Cliente } from './Cliente';
 import { Voucher } from './File';
 import { Proyecto } from './Proyecto';
+import { CuotaFilter } from './filter/CuotaFilter';
 
 export class Credito {
     id: number;
@@ -21,7 +22,7 @@ export class Credito {
     files: Voucher[];
     cliente: Cliente;
     proyecto: Proyecto;
-    listCuotas: any[] = [];
+    listCuotas: CuotaFilter[] = [];
 
     constructor(
         id: number,
@@ -41,7 +42,7 @@ export class Credito {
         files: Voucher[],
         cliente: Cliente,
         proyecto: Proyecto,
-        listCuotas: any[]
+        listCuotas: CuotaFilter[]
     ) {
         this.id = id;
         this.nombreCredito = nombreCredito;

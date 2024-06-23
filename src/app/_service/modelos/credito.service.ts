@@ -27,7 +27,6 @@ export class CreditoService {
       params = params.set('fechFin', fechFin.toISOString());
     }
 
-    console.log(params);
     return this.http.get<Credito[]>(this.url,{params});
   }
 
@@ -49,5 +48,15 @@ export class CreditoService {
   eliminar(id: string): Observable<any> {
     
     return this.http.delete(`${this.url}/${id}`);
+  }
+
+  cambioEstado(idCredito: number, idCuota: number, publicId: string): Observable<any> {
+
+    const params = new HttpParams()
+      .set('idCredito', idCredito)
+      .set('idCuota', idCuota)
+      .set('publicId', publicId);
+
+    return this.http.get(`${this.url}/cambioEstado`, { params });
   }
 }

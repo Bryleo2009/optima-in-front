@@ -2,3 +2,102 @@
     display: flex;
     justify-content: center;
 }
+
+.titulo {
+    font-weight: bold;
+    color: #EE6F2E;
+}
+
+
+::ng-deep .custom-button .p-inputtext {
+  background-color: #F3F3F6;
+  border: 1px solid #F3F3F6;
+  color: EE6F2E;
+}
+
+::ng-deep .custom-button .p-button-icon-only{
+  background-color: #F3F3F6 !important;
+  border: 1px solid #F3F3F6 !important;
+  color: rgb(238, 0, 0);
+}
+
+.container-fecha{
+  background-color: #F3F3F6;
+  padding: 10px 30px;
+  border-radius: 50px;
+}
+
+/* Estilos personalizados para el input de tipo file */
+.custom-file-input {
+    width: 100%;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .custom-file-input:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .custom-file-input:focus {
+    outline: none;
+  }
+  
+  /* Estilo para ocultar el texto predeterminado del input de tipo file */
+  .custom-file-input::file-selector-button {
+    display: none;
+  }
+
+  :host ::ng-deep .p-button{
+    background: #EE6F2E;
+    border: 1px solid #EE6F2E;
+  }
+
+  :host ::ng-deep .p-button.p-button-text{
+    color: white;
+  }
+
+  :host ::ng-deep .p-button.fa-solid {
+    color: white !important;
+  }
+
+  :host ::ng-deep .p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext{
+    box-shadow: none;
+  }
+
+  :host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+    background: #EE6F2E;
+    border-color: #EE6F2E;
+    color: white;
+  }
+
+  :host ::ng-deep .p-paginator-current{
+    color: #EE6F2E;
+  }
+
+  :host ::ng-deep .p-paginator .p-paginator-first, :host ::ng-deep .p-paginator .p-paginator-prev,:host ::ng-deep .p-paginator .p-paginator-next,:host ::ng-deep .p-paginator .p-paginator-last{
+    color:#EE6F2E
+  }
+
+  :host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page{
+    color: #EE6F2E;
+  }
+
+  :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus{
+    background: #EE6F2E;
+  }
+
+  :host ::ng-deep .p-dropdown:not(.p-disabled).p-focus{
+    border-color: #EE6F2E;
+    box-shadow: 0 0 0 0.2rem rgba(218, 141, 54, 0.5);
+  }
+
+  :host ::ng-deep .p-tag.p-tag-warning {
+    background-color: #ffc1078f;
+  }
+
+  :host ::ng-deep .p-tag.p-tag-success {
+    background-color: #28a745e0;
+  }

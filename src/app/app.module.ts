@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeNGModule } from './prime-ng.module';
 import { ButtonModule } from 'primeng/button';
 import { DashComponent } from './page/dash/dash.component';
+import {CloudinaryModule} from '@cloudinary/ng';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { DashComponent } from './page/dash/dash.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CloudinaryModule,
+    FileUploadModule
   ],
   exports: [
     ButtonModule,
