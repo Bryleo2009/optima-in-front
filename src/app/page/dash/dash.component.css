@@ -101,3 +101,7 @@
   :host ::ng-deep .p-tag.p-tag-success {
     background-color: #28a745e0;
   }
+
+  :host ::ng-deep  .p-datepicker table td > span.p-highlight{
+    background-color: #EE6F2E;
+  }
